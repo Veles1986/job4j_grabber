@@ -18,7 +18,7 @@ class HabrCareerDateTimeParserTest {
     }
 
     @Test
-    public void WhenParseThenException() {
+    public void whenParseThenException() {
         String input = "2024-11-05T12:17:09";
         assertThatThrownBy(() -> {
             HabrCareerDateTimeParser parser = new HabrCareerDateTimeParser();
