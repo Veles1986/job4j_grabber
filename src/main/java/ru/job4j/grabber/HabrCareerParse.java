@@ -17,10 +17,10 @@ public class HabrCareerParse implements Parse {
     private static final String SOURCE_LINK = "https://career.habr.com";
     public static final String PREFIX = "/vacancies?page=";
     public static final String SUFFIX = "&q=Java%20developer&type=all";
+    public final HabrCareerDateTimeParser timeParser;
 
-    public static void main(String[] args) throws IOException {
-        HabrCareerParse parse = new HabrCareerParse();
-        parse.list("run");
+    public HabrCareerParse(HabrCareerDateTimeParser timeParser) {
+        this.timeParser = timeParser;
     }
 
     private String retrieveDescription(String link) throws IOException {
@@ -55,7 +55,7 @@ public class HabrCareerParse implements Parse {
             throw new RuntimeException(e);
         }
         String date = dateElement.attr("datetime");
-        return new Post(1, vacancyName, link, description, new HabrCareerDateTimeParser().parse(date));
+        return new Post(1, vacancyName, link, description, timeParser.parse(date));
     }
 
     private Elements getElements(int page) throws IOException {
