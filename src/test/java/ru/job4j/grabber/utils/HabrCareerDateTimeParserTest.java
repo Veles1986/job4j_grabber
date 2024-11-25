@@ -1,7 +1,6 @@
 package ru.job4j.grabber.utils;
 
 import org.junit.jupiter.api.Test;
-import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 
@@ -12,9 +11,9 @@ class HabrCareerDateTimeParserTest {
     @Test
     public void whenParseIsTrue() {
         String input = "2024-11-05T12:17:09+03:00";
-        LocalDateTime excepted = LocalDateTime.parse("2024-11-05T12:17:09", DateTimeFormatter.ISO_DATE_TIME);
+        String excepted = "2024-11-05T12:17:09";
         HabrCareerDateTimeParser parser = new HabrCareerDateTimeParser();
-        assertThat(parser.parse(input)).isEqualTo(excepted);
+        assertThat(parser.parse(input).format(DateTimeFormatter.ISO_DATE_TIME)).isEqualTo(excepted);
     }
 
     @Test
