@@ -25,7 +25,7 @@ public class Main {
             var scheduler = new SchedulerManager();
             scheduler.init();
             scheduler.load(
-                    Integer.parseInt(config.get("rabbit.interval")),
+                    Integer.parseInt(config.get("interval")),
                     SuperJobGrab.class,
                     store
             );
