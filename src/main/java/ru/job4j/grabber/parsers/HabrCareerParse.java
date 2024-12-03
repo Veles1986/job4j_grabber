@@ -1,10 +1,11 @@
-package ru.job4j.grabber;
+package ru.job4j.grabber.parsers;
 
 import org.jsoup.Connection;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+import ru.job4j.grabber.Post;
 import ru.job4j.grabber.utils.HabrCareerDateTimeParser;
 
 import java.io.IOException;
@@ -17,11 +18,6 @@ public class HabrCareerParse implements Parse {
     private static final String SOURCE_LINK = "https://career.habr.com";
     public static final String PREFIX = "/vacancies?page=";
     public static final String SUFFIX = "&q=Java%20developer&type=all";
-    public final HabrCareerDateTimeParser timeParser;
-
-    public HabrCareerParse(HabrCareerDateTimeParser timeParser) {
-        this.timeParser = timeParser;
-    }
 
     private String retrieveDescription(String link) throws IOException {
         StringBuilder result = new StringBuilder();
@@ -55,6 +51,7 @@ public class HabrCareerParse implements Parse {
             throw new RuntimeException(e);
         }
         String date = dateElement.attr("datetime");
+        HabrCareerDateTimeParser timeParser = new HabrCareerDateTimeParser();
         return new Post(1, vacancyName, link, description, timeParser.parse(date));
     }
 
@@ -66,7 +63,7 @@ public class HabrCareerParse implements Parse {
     }
 
     @Override
-    public List<Post> list(String link) throws IOException {
+    public List<Post> fetch() throws IOException {
         List<Post> result = new ArrayList<>();
         for (int i = 1; i <= PAGE_NUMBERS; i++) {
             for (Element element : getElements(i)) {

@@ -2,34 +2,33 @@ package ru.job4j.grabber;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.LocalDateTime;
 import java.util.Objects;
 
 public class Post {
 
-    private int id;
+    private long id;
     private String title;
     private String link;
     private String description;
-    private LocalDateTime created;
+    private Long time;
 
-    public Post(int id, String title, String link, String description, LocalDateTime created) {
+    public Post(long id, String title, String link, String description, long time) {
         this.id = id;
         this.title = title;
         this.link = link;
         this.description = description;
-        this.created = created;
+        this.time = time;
     }
 
     public Post(ResultSet resultSet) throws SQLException {
-        this.id = resultSet.getInt("id");
+        this.id = resultSet.getLong("id");
         this.title = resultSet.getString("title");
         this.link = resultSet.getString("link");
         this.description = resultSet.getString("description");
-        this.created = resultSet.getTimestamp("created").toLocalDateTime();
+        this.time = resultSet.getTimestamp("created").getTime();
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
@@ -61,12 +60,12 @@ public class Post {
         this.description = description;
     }
 
-    public LocalDateTime getCreated() {
-        return created;
+    public Long getTime() {
+        return time;
     }
 
-    public void setCreated(LocalDateTime created) {
-        this.created = created;
+    public void setTime(Long time) {
+        this.time = time;
     }
 
     @Override
@@ -93,7 +92,7 @@ public class Post {
                 + ", title='" + title + '\''
                 + ", link='" + link + '\''
                 + ", description='" + description + '\''
-                + ", created=" + created
+                + ", created=" + time
                 + '}';
     }
 }

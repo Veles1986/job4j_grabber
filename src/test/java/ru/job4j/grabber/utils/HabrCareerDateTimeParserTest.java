@@ -1,25 +1,22 @@
 package ru.job4j.grabber.utils;
 
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
-import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 
-import static org.assertj.core.api.Assertions.*;
-
 class HabrCareerDateTimeParserTest {
-
     @Test
     public void whenParseIsTrue() {
         String input = "2024-11-05T12:17:09+03:00";
-        String excepted = "2024-11-05T12:17:09";
+        long excepted = 1730791029000L;
         HabrCareerDateTimeParser parser = new HabrCareerDateTimeParser();
-        assertThat(parser.parse(input).format(DateTimeFormatter.ISO_DATE_TIME)).isEqualTo(excepted);
+        Assertions.assertThat(parser.parse(input)).isEqualTo(excepted);
     }
 
     @Test
     public void whenParseThenException() {
         String input = "2024-11-05T12:17:09";
-        assertThatThrownBy(() -> {
+        Assertions.assertThatThrownBy(() -> {
             HabrCareerDateTimeParser parser = new HabrCareerDateTimeParser();
             parser.parse(input);
         }).isInstanceOf(DateTimeParseException.class);
