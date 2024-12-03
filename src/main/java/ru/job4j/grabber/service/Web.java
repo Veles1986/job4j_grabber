@@ -11,17 +11,10 @@ public class Web {
     }
 
     public void start(int port) {
-        // Создаем сервер Javalin
         var app = Javalin.create();
-
-        // Указываем порт, на котором будет работать сервер
         app.start(port);
-
-        // Формируем страницу с вакансиями
         var page = new StringBuilder();
         store.getAll().forEach(post -> page.append(post.toString()).append(System.lineSeparator()));
-
-        // Настраиваем обработчик для корневого URL
         app.get("/", ctx -> ctx.result(page.toString()));
     }
 }

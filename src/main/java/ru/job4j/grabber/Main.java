@@ -12,15 +12,6 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class Main {
-   /* public static void main(String[] args) throws Exception {
-        SchedulerManager schedulerManager = new SchedulerManager();
-        Config config = new Config();
-        config.load("src/main/resources/db/app.properties");
-        Store store = new JdbcStore(config);
-        schedulerManager.init();
-        schedulerManager.load(Integer.parseInt(config.get("time")), SuperJobGrab.class, store);
-    }*/
-
     private static final Logger LOG = LoggerFactory.getLogger(Main.class);
 
     public static void main(String[] args) throws Exception {
@@ -28,13 +19,9 @@ public class Main {
         config.load("src/main/resources/db/application.properties");
         try {
             Store store = new JdbcStore(config);
-
-            // Добавляем тестовый пост
             var post = new Post();
             post.setTitle("Super Java Job");
             store.save(post);
-
-            // Настраиваем и запускаем планировщик
             var scheduler = new SchedulerManager();
             scheduler.init();
             scheduler.load(
@@ -42,8 +29,6 @@ public class Main {
                     SuperJobGrab.class,
                     store
             );
-
-            // Запускаем веб-сервер
             new Web(store).start(Integer.parseInt(config.get("server.port")));
         } catch (SQLException e) {
             LOG.error("When creating a connection", e);
