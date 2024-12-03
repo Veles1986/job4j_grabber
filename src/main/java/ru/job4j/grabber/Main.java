@@ -21,7 +21,7 @@ public class Main {
         schedulerManager.load(Integer.parseInt(config.get("time")), SuperJobGrab.class, store);
     }*/
 
-    private static final Logger log = LoggerFactory.getLogger(Main.class);
+    private static final Logger LOG = LoggerFactory.getLogger(Main.class);
 
     public static void main(String[] args) throws Exception {
         var config = new Config();
@@ -46,7 +46,7 @@ public class Main {
             // Запускаем веб-сервер
             new Web(store).start(Integer.parseInt(config.get("server.port")));
         } catch (SQLException e) {
-            log.error("When creating a connection", e);
+            LOG.error("When creating a connection", e);
         }
     }
 }
