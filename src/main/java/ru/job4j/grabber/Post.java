@@ -2,6 +2,10 @@ package ru.job4j.grabber;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
 import java.util.Objects;
 
 public class Post {
@@ -95,7 +99,7 @@ public class Post {
                 + ", title='" + title + '\''
                 + ", link='" + link + '\''
                 + ", description='" + description + '\''
-                + ", created=" + time
+                + ", created=" + new Timestamp(time).toLocalDateTime().format(DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM))
                 + '}';
     }
 }
